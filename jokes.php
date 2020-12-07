@@ -2,11 +2,13 @@
 
 	try {
 
-		$pdo = new PDO('mysql:host=localhost;port=3308;dbname=jokes_crud;charset=utf8', 'root', '');
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		include __DIR__ .'/includes/DatabaseConnection.php';
+		include __DIR__ .'/includes/DatabaseFunctions.php';
 
-		$sql = "SELECT `joke`.`id`, `text`, `name`, `email` FROM `joke` INNER JOIN `author` ON `authorid` = `author`.`id`";
-		$jokes = $pdo->query($sql);
+
+		$sql = "SELECT `joke`.`id`, `text`, `name`, `email` FROM `joke` INNER JOIN `author` ON `author_id` = `author`.`id` INNER JOIN `email` ON `email`.`author_id` = `author`.`id`";
+    	$jokes = $pdo->query($sql);
+		$totalJokes = totalJokes($pdo);
 
 		$pdo = null;
 

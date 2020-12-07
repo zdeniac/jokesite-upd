@@ -1,3 +1,4 @@
+<p>Összesen <?=$totalJokes?> vicc szerepel az adatbázisban</p>
 <?php foreach ($jokes as $joke): ?>
 <blockquote>
 	<p>
