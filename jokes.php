@@ -5,12 +5,8 @@
 		include __DIR__ .'/includes/DatabaseConnection.php';
 		include __DIR__ .'/includes/DatabaseFunctions.php';
 
-
-		$sql = "SELECT `joke`.`id`, `text`, `name`, `email` FROM `joke` INNER JOIN `author` ON `author_id` = `author`.`id` INNER JOIN `email` ON `email`.`author_id` = `author`.`id`";
-    	$jokes = $pdo->query($sql);
-		$totalJokes = totalJokes($pdo);
-
-		$pdo = null;
+    	$jokes = allJokes($pdo);
+		$countJokes = countJokes($pdo);
 
 		$title = 'Viccek listája';
 

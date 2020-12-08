@@ -5,16 +5,9 @@
 		try {
 				
 			include __DIR__ .'/includes/DatabaseConnection.php';
+			include __DIR__ .'/includes/DatabaseFunctions.php';
 
-			$sql = 'INSERT INTO `joke` SET `text` = :joketext';
-
-			$stmt = $pdo->prepare($sql);
-
-			$stmt->bindValue(':joketext', $_POST['joketext']);
-			$stmt->execute();
-
-			$pdo = null;
-
+			insertJoke($pdo, $_POST['joketext'], 1);
 			header('Location: jokes.php');
 
 		}
