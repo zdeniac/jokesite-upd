@@ -6,9 +6,9 @@
 		
 	try {
 			
-		if (isset($_POST['joketext'])) {
+		if (isset($_POST['text'])) {
 			
-			updateJoke($pdo, $_POST['id'], $_POST['joketext'], 1);
+			updateJoke($pdo, ['id' => $_POST['id'], 'text' => $_POST['text'], 'author_id' => 1]);
 			header('Location: jokes.php');
 
 		}

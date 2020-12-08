@@ -1,13 +1,13 @@
 <?php
 
-	if (isset($_POST['joketext'])) {
+	if (isset($_POST['text'])) {
 		
 		try {
 				
 			include __DIR__ .'/includes/DatabaseConnection.php';
 			include __DIR__ .'/includes/DatabaseFunctions.php';
 
-			insertJoke($pdo, $_POST['joketext'], 1);
+			insertJoke($pdo, ['text' => $_POST['text'], 'author_id' => 3]);
 			header('Location: jokes.php');
 
 		}

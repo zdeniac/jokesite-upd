@@ -28,20 +28,41 @@
 		return $query->fetch();
 	}
 
-	function insertJoke(PDO $pdo, string $jokeText, int $authorId) {
+	function insertJoke(PDO $pdo, array $fields) {
 
-		$sql = 'INSERT INTO `joke`(`text`, `author_id`) VALUES(:text, :author_id)';
-		$parameters = [':text' => $jokeText, ':author_id' => $authorId];
+		$sql = 'INSERT INTO `joke`(';
 
-		query($pdo, $sql, $parameters);
+		foreach ($fields as $key => $value) {
+			$sql .= '`' . $key . '`,';
+		}
+
+		$sql = rtrim($sql, ',');
+		$sql .= ') VALUES (';
+
+		foreach ($fields as $key => $value) {
+			$sql .= ':' . $key . ',';
+		}
+		$sql = rtrim($sql, ',');
+		$sql .= ')';
+
+		query($pdo, $sql, $fields);
 	}
 
-	function updateJoke(PDO $pdo, $jokeId, string $jokeText, $authorId) {
+	function updateJoke(PDO $pdo, array $fields) {
 
-		$sql = 'UPDATE `joke` SET `text` = :text, `author_id` = :author_id WHERE `id` = :id';
-		$parameters = [':id' => $jokeId, ':text' => $jokeText, ':author_id' => $authorId];
+		$sql = 'UPDATE `joke` SET ';
+		
+		foreach ($fields as $key => $value) {
+			$sql .= '`' . $key .'` = :' . $key . ',';
+		}
 
-		query($pdo, $sql, $parameters);
+		$sql = rtrim($sql, ',');
+		$sql .= ' WHERE `id` = :primaryKey';
+
+		//be kell állítani az elsődleges kulcsot, mert az 'id' mező már foglalt a paraméterek közt
+		$fields['primaryKey'] = $fields['id'];
+
+		query($pdo, $sql, $fields);
 	}
 
 	function deleteJoke(PDO $pdo, $jokeId) {
@@ -52,7 +73,7 @@
 		query($pdo, $sql, $parameters);
 	}
 
-	function allJokes(PDO $pdo) {
+	function allJokes(PDO $pdo): array {
 
 		$sql = 'SELECT `joke`.`id`, `text`, `name`, `email` FROM `joke` INNER JOIN `author` ON `author_id` = `author`.`id` INNER JOIN `email` ON `email`.`author_id` = `author`.`id`';
 		$jokes = query($pdo, $sql);
