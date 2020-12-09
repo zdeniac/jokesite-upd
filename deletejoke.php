@@ -6,7 +6,7 @@
 		include __DIR__ .'/includes/DatabaseFunctions.php';
 
 
-		deleteJoke($pdo, $_POST['id']);
+		delete($pdo, 'joke', $_POST['id']);
 		header('Location: jokes.php');
 
 

@@ -28,29 +28,6 @@
 		return $query->fetch();
 	}
 
-	function insertJoke(PDO $pdo, array $fields) {
-
-		$sql = 'INSERT INTO `joke`(';
-
-		foreach ($fields as $key => $value) {
-			$sql .= '`' . $key . '`,';
-		}
-
-		$sql = rtrim($sql, ',');
-		$sql .= ') VALUES (';
-
-		foreach ($fields as $key => $value) {
-			
-			$sql .= ':' . $key . ',';
-			
-		}
-		$sql = rtrim($sql, ',');
-		$sql .= ')';
-
-		$fields = processDates($fields);
-
-		query($pdo, $sql, $fields);
-	}
 
 	function updateJoke(PDO $pdo, array $fields) {
 
@@ -69,14 +46,6 @@
 		$fields = processDates($fields);
 
 		query($pdo, $sql, $fields);
-	}
-
-	function deleteJoke(PDO $pdo, $id) {
-
-		$sql = 'DELETE FROM `joke` WHERE `id` = :id';
-		$parameters = [':id' => $id];
-
-		query($pdo, $sql, $parameters);
 	}
 
 	function allJokes(PDO $pdo): array {
@@ -104,43 +73,61 @@
 		return $fields;
 	}
 
-//------------- AUTHORS -----------------------------
+	function findAll(PDO $pdo, string $table): array {
 
-	function allAuthors(PDO $pdo): array {
+		$sql = 'SELECT * FROM ' . $table;
+		$result = query($pdo, $sql);
 
-		$sql = 'SELECT * FROM `author`';
-		$authors = query($pdo, $sql);
-
-		return $authors->fetchAll();
+		return $result->fetchAll();
 	}
 
-	function deleteAuthors(PDO $pdo, $id) {
+	function delete(PDO $pdo, string $table, int $id, string $primaryKey = 'id') {
 
-		$sql = 'DELETE FROM `author` WHERE `id` = :id';
+		$sql = 'DELETE FROM `' . $table . '` WHERE `' . $primaryKey . '`=:id';
 		$parameters = [':id' => $id];
 
 		query($pdo, $sql, $parameters);
 	}
 
-	function insertAuthor(PDO $pdo, array $fields) {
+	function insert(PDO $pdo, string $table, array $fields) {
 
-		$sql = 'INSERT INTO `author`(';
+		$sql = 'INSERT INTO `' . $table . '` (';
 
 		foreach ($fields as $key => $value) {
-			
 			$sql .= '`' . $key . '`,';
-
 		}
 		$sql = rtrim($sql, ',');
-		$sql .= ') VALUES (';
 
+		$sql .= ') VALUES (';
 		foreach ($fields as $key => $value) {
-			$sql .=  ':'. $key . ',';
+			$sql .= ':' . $key . ',';
 		}
 		$sql = rtrim($sql, ',');
 		$sql .= ')';
 
+		//DateTime elkészítése
 		$fields = processDates($fields);
 
 		query($pdo, $sql, $fields);
+	}
+
+	function update(PDO $pdo, string $table, array $fields, int $where, string $primaryKey = 'id') {
+
+		$sql = 'UPDATE `' . $table . '` SET ';
+		
+		foreach ($fields as $key => $value) {
+			
+			$sql .= '`' . $key .'` = :' . $key . ',';
+		}
+
+		$sql = rtrim($sql, ',');
+		$sql .= ' WHERE '. $primaryKey .' = :primaryKey';
+
+		//be kell állítani az elsődleges kulcsot, mert az 'id' mező már foglalt a paraméterek közt
+		$fields['primaryKey'] = $where;
+
+		$fields = processDates($fields);
+
+		query($pdo, $sql, $fields);
+
 	}

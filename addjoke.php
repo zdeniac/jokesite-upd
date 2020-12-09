@@ -7,7 +7,7 @@
 			include __DIR__ .'/includes/DatabaseConnection.php';
 			include __DIR__ .'/includes/DatabaseFunctions.php';
 
-			insertJoke($pdo, ['text' => $_POST['text'], 'author_id' => 3, 'date' => new DateTime()]);
+			insert($pdo, 'joke', ['text' => $_POST['text'], 'author_id' => 3, 'date' => new DateTime()]);
 			header('Location: jokes.php');
 
 		}
