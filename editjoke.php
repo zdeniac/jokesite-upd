@@ -8,7 +8,7 @@
 			
 		if (isset($_POST['text'])) {
 			
-			updateJoke($pdo, ['id' => $_POST['id'], 'text' => $_POST['text'], 'author_id' => 1]);
+			updateJoke($pdo, ['id' => $_POST['id'], 'text' => $_POST['text'], 'author_id' => 1, 'date' => new DateTime]);
 			header('Location: jokes.php');
 
 		}
