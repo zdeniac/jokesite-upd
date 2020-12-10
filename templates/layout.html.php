@@ -9,7 +9,7 @@
 		<ul>
 			<li><a href="index.php">Kezdőlap</a></li>
 			<li><a href="jokes.php">Viccek</a></li>
-			<li><a href="addjoke.php">Vicc feltöltése</a></li>
+			<li><a href="editjoke.php">Vicc feltöltése</a></li>
 		</ul>
 	</nav>
 	<main>

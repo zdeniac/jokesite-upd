@@ -6,15 +6,24 @@
 		
 	try {
 			
-		if (isset($_POST['text'])) {
+		if (isset($_POST['joke']['text'])) {
+
+			$joke = $_POST['joke'];
+			$joke['author_id'] = 1;
+			$joke['date'] = new DateTime();
 			
-			update($pdo, 'joke', ['id' => $_POST['id'], 'text' => $_POST['text'], 'author_id' => 1, 'date' => new DateTime], $_POST['id']);
+			save($pdo, 'joke', $joke, $joke['id'], 'id');
 			header('Location: jokes.php');
 
 		}
 		else {
 
-			$joke = getJoke($pdo, $_GET['id']);
+			if (isset($_GET['id'])) {
+				
+				$joke = findById($pdo, 'joke', $_GET['id']);
+
+			}
+
 
 			$title = 'Vicc szerkesztése';
 

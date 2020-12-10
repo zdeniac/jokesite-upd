@@ -4,9 +4,9 @@
 	<?=htmlspecialchars($joke['text'], ENT_QUOTES, 'UTF-8')?>
 	<p>
 		A viccet feltöltötte:
-<!-- 		<a href="mailto:<?=htmlspecialchars($joke['email'], ENT_QUOTES, 'UTF-8')?>">
+		<a href="mailto:<?=htmlspecialchars($joke['email'], ENT_QUOTES, 'UTF-8')?>">
 			<?=htmlspecialchars($joke['name'], ENT_QUOTES, 'UTF-8')?>
-		</a> -->
+		</a>
 		<?php
 			$date = new DateTime($joke['date']);
 		?>
