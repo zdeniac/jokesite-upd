@@ -3,27 +3,31 @@
 	try {
 
 		include __DIR__ .'/includes/DatabaseConnection.php';
-		include __DIR__ .'/includes/DatabaseFunctions.php';
+		include __DIR__ .'/classes/DatabaseTable.php';
 
-    	$results = findAll($pdo, 'joke');
-    	
+
+		$jokesTable = new DatabaseTable($pdo, 'joke');
+		$authors = new DatabaseTable($pdo, 'author');
+		$emails = new DatabaseTable($pdo, 'email');
+
     	$jokes = [];
 
-    	foreach ($results as $joke) {
-    
-    		$author = findById($pdo, 'author', $joke['author_id']);
+    	foreach ($jokesTable->findAll() as $joke) {
+
+    		$author = $authors->findById($joke['author_id']);
+    		$email = $emails->findById($joke['author_id']);
+
     		$jokes[] = [
     			'id' => $joke['id'], 
     			'text' => $joke['text'], 
     			'date' => $joke['date'], 
-    			'name' => $author['name'], 
-    			'email' => $author['name']
+    			'name' => $author['name'],
+    			'email' => $email['email']
     		];
 
     	}
 
-
-		$countJokes = countJokes($pdo);
+		$countJokes = $jokesTable->total();
 
 		$title = 'Viccek listája';
 

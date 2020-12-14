@@ -3,10 +3,12 @@
 	try {
 		
 		include __DIR__ .'/includes/DatabaseConnection.php';
-		include __DIR__ .'/includes/DatabaseFunctions.php';
+		include __DIR__ .'/classes/DatabaseTable.php';
 
 
-		delete($pdo, 'joke', $_POST['id']);
+		$joke = new DatabaseTable($pdo, 'joke');
+		$joke->delete($_POST['id']);
+		
 		header('Location: jokes.php');
 
 

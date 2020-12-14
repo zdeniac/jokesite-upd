@@ -1,18 +1,20 @@
 <?php
 
 	include __DIR__ .'/includes/DatabaseConnection.php';
-	include __DIR__ .'/includes/DatabaseFunctions.php';
+	include __DIR__ .'/classes/DatabaseTable.php';
 
 		
 	try {
-			
+
+		$db = new DatabaseTable($pdo, 'joke');
+
 		if (isset($_POST['joke']['text'])) {
 
 			$joke = $_POST['joke'];
 			$joke['author_id'] = 1;
 			$joke['date'] = new DateTime();
-			
-			save($pdo, 'joke', $joke, $joke['id'], 'id');
+
+			$db->save($joke, $joke['id']);
 			header('Location: jokes.php');
 
 		}
@@ -20,7 +22,7 @@
 
 			if (isset($_GET['id'])) {
 				
-				$joke = findById($pdo, 'joke', $_GET['id']);
+				$joke = $db->findById($_GET['id']);
 
 			}
 

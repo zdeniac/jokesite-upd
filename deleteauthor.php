@@ -3,7 +3,7 @@
 	try {
 		
 		include __DIR__ .'/includes/DatabaseConnection.php';
-		include __DIR__ .'/includes/DatabaseFunctions.php';
+		include __DIR__ .'/classes/DatabaseTable.php';
 
 
 		delete($pdo, 'author', $_POST['id']);
