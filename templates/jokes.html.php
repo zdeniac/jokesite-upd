@@ -14,7 +14,7 @@
 	</p>
 	<p>
 		<a href="index.php?action=edit&id=<?=$joke['id']?>">Szerkesztés</a>
-		<form action="deletejoke.php" method="post">
+		<form action="index.php?action=delete&id=<?=$joke['id']?>" method="post">
 			<input type="hidden" name="id" value="<?=$joke['id']?>">
 			<input type="submit" value="Törlés">
 		</form>

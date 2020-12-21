@@ -68,7 +68,7 @@
 				$joke['date'] = new DateTime();
 
 				$this->jokesTable->save($joke, $joke['id']);
-				header('Location: index.php?action=list');
+				header('Location: index.php?controller=joke&action=list');
 
 			}
 			else {

@@ -7,9 +7,9 @@
 <body>
 	<nav>
 		<ul>
-			<li><a href="index.php">Kezdőlap</a></li>
-			<li><a href="index.php?action=list">Viccek</a></li>
-			<li><a href="index.php?action=edit">Vicc feltöltése</a></li>
+			<li><a href="/joke/home">Kezdőlap</a></li>
+			<li><a href="/joke/list">Viccek</a></li>
+			<li><a href="/joke/edit">Vicc feltöltése</a></li>
 		</ul>
 	</nav>
 	<main>
