@@ -16,7 +16,7 @@
 
 		}
 
-		public function list() {
+		public function list(): array {
 
 	    	$jokes = [];
 
@@ -56,7 +56,7 @@
 
 			$this->jokesTable->delete($_POST['id']);
 			
-			header('Location: index.php?action=list');
+			header('Location: /novice_to_ninja/joke/list');
 		}
 
 		public function edit(): array {
@@ -68,7 +68,7 @@
 				$joke['date'] = new DateTime();
 
 				$this->jokesTable->save($joke, $joke['id']);
-				header('Location: index.php?controller=joke&action=list');
+				header('Location: /novice_to_ninja/joke/list');
 
 			}
 			else {
