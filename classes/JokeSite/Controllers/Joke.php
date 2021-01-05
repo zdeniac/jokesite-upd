@@ -1,7 +1,9 @@
 <?php
 
+	namespace JokeSite\Controllers;
+	use \Ninja\DatabaseTable;
 
-	class JokeController
+	class Joke
 	{
 
 

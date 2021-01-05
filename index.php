@@ -1,7 +1,7 @@
 <?php
 try {
 
-	include __DIR__ . '\\classes\\EntryPoint.php';
+	include __DIR__ . '/classes/EntryPoint.php';
 
 	$route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
@@ -16,4 +16,5 @@ catch (PDOException $e) {
 
 }
 
-include __DIR__ . '/templates/layout.html.php';
+//előfordulhat olyan eset, hogy kétszer van beépítve a layout view
+include_once __DIR__ . '/templates/layout.html.php';
