@@ -1,44 +1,88 @@
 <?php
 //route-okat tartalmazó osztály
+//REST --> Representational State Transfer
 
 namespace JokeSite;
 
-class Routes {
 
-	public function callAction($route): array {
+class Routes implements \Ninja\Routes {
+
+
+	public function getRoutes(): array {
 
 		require __DIR__ . '/../../includes/DatabaseConnection.php';
 
 		$jokesTable = new \Ninja\DatabaseTable($pdo, 'joke');
 		$authorsTable = new \Ninja\DatabaseTable($pdo, 'author');
 
-		if ($route === 'novice_to_ninja/joke/list') {
-			$controller = new \JokeSite\Controllers\Joke($jokesTable, $authorsTable);
-			$page = $controller->list();
-		}
-		else if ($route === 'novice_to_ninja/joke/home' || $route === 'novice_to_ninja/') {
-			$controller = new \JokeSite\Controllers\Joke($jokesTable, $authorsTable);
-			$page = $controller->home();
-		}
-		else if ($route === 'novice_to_ninja/joke/edit') {
-			$controller = new \JokeSite\Controllers\Joke($jokesTable, $authorsTable);
-			$page = $controller->edit();
-		}
-		else if ($route === 'novice_to_ninja/joke/delete') {
-			$controller = new \JokeSite\Controllers\Joke($jokesTable, $authorsTable);
-			$page = $controller->delete();
-		}
-		else if ($route === 'novice_to_ninja/register') {
-			$controller = new \JokeSite\Controllers\Register($authorsTable);
-			$page = $controller->showForm();
-		}
-		else {
-			http_response_code(404);
-			die('404');
-		}
+		$jokeController = new \JokeSite\Controllers\Joke($jokesTable, $authorsTable);
+		$authorController = new \JokeSite\Controllers\Register($authorsTable);
 
-		return $page;
+
+		$routes = [
+
+			'novice_to_ninja/author/register' => [
+				'POST' => [
+					'controller' => $authorController,
+					'action' => 'registerUser'
+				],
+				'GET' => [
+					'controller' => $authorController,
+					'action' => 'registrationForm'
+				]
+			],
+
+			'novice_to_ninja/author/success' => [
+				'GET' => [
+					'controller' => $authorController,
+					'action' => 'success'
+				]
+			],
+
+			'novice_to_ninja/joke/edit' => [
+				'POST' => [
+					'controller' => $jokeController,
+					'action' => 'saveEdit'
+				],
+				'GET' => [
+					'controller' => $jokeController,
+					'action' => 'edit'
+				]
+			],
+
+			'novice_to_ninja/joke/list' => [
+				'GET' => [
+					'controller' => $jokeController,
+					'action' => 'list'
+				]
+			],
+
+			'novice_to_ninja/joke/home' => [
+				'GET' => [
+					'controller' => $jokeController,
+					'action' => 'home'
+				]
+			],
+
+			'novice_to_ninja/' => [
+				'GET' => [
+					'controller' => $jokeController,
+					'action' => 'home'
+				]
+			],
+
+			'novice_to_ninja/joke/delete' => [
+				'POST' => [
+					'controller' => $jokeController,
+					'action' => 'delete'
+				]
+			],
+
+		];
+
+		return $routes;
 
 	}
+
 
 }

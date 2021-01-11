@@ -1,11 +1,11 @@
 <?php
 try {
 
-	include __DIR__ . '/classes/EntryPoint.php';
+	include __DIR__ . '/includes/autoload.php';
 
 	$route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
-	$entryPoint = new EntryPoint($route);
+	$entryPoint = new \Ninja\EntryPoint($route, $_SERVER['REQUEST_METHOD'], new \JokeSite\Routes());
 	$entryPoint->run();
 
 }
@@ -16,5 +16,5 @@ catch (PDOException $e) {
 
 }
 
-//előfordulhat olyan eset, hogy kétszer van beépítve a layout view
+//előfordulhat olyan eset, hogy kétszer van behívva a layout view
 include_once __DIR__ . '/templates/layout.html.php';

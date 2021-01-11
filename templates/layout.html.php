@@ -11,6 +11,7 @@
 			<li><a href="/novice_to_ninja/joke/home">Kezdőlap</a></li>
 			<li><a href="/novice_to_ninja/joke/list">Viccek</a></li>
 			<li><a href="/novice_to_ninja/joke/edit">Vicc feltöltése</a></li>
+			<li><a href="/novice_to_ninja/author/register">Regisztráció</a></li>
 		</ul>
 	</nav>
 	<main>

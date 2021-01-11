@@ -99,7 +99,7 @@ class DatabaseTable {
 	}
 
 //az id duplikátum miatt (ha van) a program elszáll PDOExceptionnel ('duplicate entry') és a 'catch'-re ugrik
-	public function save(array $data, string $id) {
+	public function save(array $data) {
 
 		try {
 			//ha a hidden mezőn keresztül üres érték került be, az auto_increment NULL-t kap
@@ -109,7 +109,7 @@ class DatabaseTable {
 			$this->insert($data);
 		}
 		catch (\PDOException $e) {
-			$this->update($data, $id, $this->primaryKey);
+			$this->update($data, $data['id'], $this->primaryKey);
 		}
 		//pdo-lecsatlakozás
 		$this->connection = null;
