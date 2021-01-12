@@ -28,6 +28,26 @@ class DatabaseTable {
 		return $query;
 	}
 
+	public function findById(int $id): array {
+
+		$sql = 'SELECT * FROM `' . $this->table . '` WHERE `' . $this->primaryKey . '` = :' . $this->primaryKey;
+		$parameters = [':' . $this->primaryKey => $id];
+
+		$query = $this->query($sql, $parameters);
+
+		return $query->fetch();
+	}
+
+	public function find(string $column, string $value): array {
+
+		$sql = 'SELECT * FROM `' . $this->table . '` WHERE `' . $column . '` = :value';
+		$parameters = [':value' => $value];
+
+		$query = $this->query($sql, $parameters);
+
+		return $query->fetchAll();
+	}
+
 	public function findAll(): array {
 
 		$sql = 'SELECT * FROM `' . $this->table . '`';
@@ -66,18 +86,7 @@ class DatabaseTable {
 		$this->query($sql, $fields);
 	}
 
-	public function findById(int $id): array {
-
-		$sql = 'SELECT * FROM `' . $this->table . '` WHERE `' . $this->primaryKey . '` = :' . $this->primaryKey;
-		$parameters = [':' . $this->primaryKey => $id];
-
-		$query = $this->query($sql, $parameters);
-
-		return $query->fetch();
-	}
-
-
-	public function update(array $fields, int $id) {
+	public function update(array $fields, int $id, string $primaryKey = 'id') {
 
 		$sql = 'UPDATE `' . $this->table . '` SET ';
 		
@@ -103,13 +112,13 @@ class DatabaseTable {
 
 		try {
 			//ha a hidden mezőn keresztül üres érték került be, az auto_increment NULL-t kap
-			if ($data[$this->primaryKey] == '') {
+			if (isset($data[$this->primaryKey]) && $data[$this->primaryKey] == '') {
 				$data[$this->primaryKey] = null;
 			}
 			$this->insert($data);
 		}
 		catch (\PDOException $e) {
-			$this->update($data, $data['id'], $this->primaryKey);
+			$this->update($data, $data[$this->primaryKey], $this->primaryKey);
 		}
 		//pdo-lecsatlakozás
 		$this->connection = null;
