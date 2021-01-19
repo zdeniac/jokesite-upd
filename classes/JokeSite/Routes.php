@@ -4,19 +4,37 @@
 
 namespace JokeSite;
 
+use \Ninja\DatabaseTable as DatabaseTable;
+use \Ninja\Authentication as Authentication;
 
-class Routes implements \Ninja\Routes {
+use \JokeSite\Controllers\Joke as JokeController;
+use \JokeSite\Controllers\Register as RegisterController;
 
 
-	public function getRoutes(): array {
+class Routes implements \Ninja\Routes
+{
+
+
+	private $authorsTable;
+	private $jokesTable;
+	private $authenticaton;
+
+	
+	public function __construct() {
 
 		require __DIR__ . '/../../includes/DatabaseConnection.php';
 
-		$jokesTable = new \Ninja\DatabaseTable($pdo, 'joke');
-		$authorsTable = new \Ninja\DatabaseTable($pdo, 'author');
+		$this->jokesTable = new DatabaseTable($pdo, 'joke', 'id');
+		$this->authorsTable = new DatabaseTable($pdo, 'author', 'id');
+		$this->authenticaton = new Authentication($this->authorsTable, 'email', 'password');
 
-		$jokeController = new \JokeSite\Controllers\Joke($jokesTable, $authorsTable);
-		$authorController = new \JokeSite\Controllers\Register($authorsTable);
+	}
+
+	public function getRoutes(): array {
+
+
+		$jokeController = new JokeController($jokesTable, $authorsTable);
+		$authorController = new RegisterController($authorsTable);
 
 
 		$routes = [
@@ -47,7 +65,16 @@ class Routes implements \Ninja\Routes {
 				'GET' => [
 					'controller' => $jokeController,
 					'action' => 'edit'
-				]
+				],
+				'login' => true
+			],
+
+			'novice_to_ninja/joke/delete' => [
+				'POST' => [
+					'controller' => $jokeController,
+					'action' => 'delete'
+				],
+				'login' => true
 			],
 
 			'novice_to_ninja/joke/list' => [
@@ -69,18 +96,17 @@ class Routes implements \Ninja\Routes {
 					'controller' => $jokeController,
 					'action' => 'home'
 				]
-			],
-
-			'novice_to_ninja/joke/delete' => [
-				'POST' => [
-					'controller' => $jokeController,
-					'action' => 'delete'
-				]
-			],
+			]
 
 		];
 
 		return $routes;
+
+	}
+
+	public function getAuthentication(): Authentication {
+
+		return $this->authenticaton;
 
 	}
 

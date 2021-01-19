@@ -3,6 +3,7 @@
 namespace JokeSite\Controllers;
 use \Ninja\DatabaseTable;
 
+
 class Joke
 {
 
