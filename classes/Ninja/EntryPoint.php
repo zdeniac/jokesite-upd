@@ -5,7 +5,7 @@
 
 namespace Ninja;
 
-use \Ninja\Routes as Routes;
+use \Ninja\Routes;
 
 
 class EntryPoint
@@ -15,6 +15,8 @@ class EntryPoint
 	private $route;
 	private $routes;
 	private $method;
+	//localhost miatt kellett
+	private $site = '/novice_to_ninja';
 
 	
 	public function __construct(string $route, string $method, Routes $routes){
@@ -35,7 +37,7 @@ class EntryPoint
 //ha az aloldal bejelentkezést igényel, és a felhasználó nincs bejelentkezve
 		if (isset($routes[$this->route]['login']) && !$authentication->isLoggedIn()) {
 		
-			header('location: /login/error');
+			header('location: ' . $this->site . '/login/error');
 		
 		}
 		else {
@@ -56,7 +58,7 @@ class EntryPoint
 		
 		}
 
-		include __DIR__ . '/../../templates/layout.html.php';
+		echo $this->loadTemplate('layout.html.php', ['loggedIn' => $authentication->isLoggedIn(), 'output' => $output, 'title' => $title]);
 
 	}
 

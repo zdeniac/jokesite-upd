@@ -1,6 +1,7 @@
 <?php
 
 namespace JokeSite\Controllers;
+
 use \Ninja\DatabaseTable;
 
 
@@ -41,9 +42,10 @@ class Joke
 
 		$title = 'Viccek listája';
 
-		return ['template' => 'jokes.html.php', 
-				'title' => $title, 
-				'variables' => ['countJokes' => $countJokes, 'jokes' => $jokes]
+		return [
+			'template' => 'jokes.html.php', 
+			'title' => $title, 
+			'variables' => ['countJokes' => $countJokes, 'jokes' => $jokes]
 			];
 
 	}
@@ -71,9 +73,10 @@ class Joke
 
 		$title = 'Vicc szerkesztése';
 
-		return ['template' => 'editjoke.html.php',
-				'title' => $title, 
-				'variables' => ['joke' => $joke ?? null]
+		return [
+			'template' => 'editjoke.html.php',
+			'title' => $title, 
+			'variables' => ['joke' => $joke ?? null]
 		];
 
 	}

@@ -1,6 +1,7 @@
 <?php
 
 namespace JokeSite\Controllers;
+
 use \Ninja\DatabaseTable;
 
 
@@ -19,16 +20,18 @@ class Register
 
 	public function registrationForm(): array {
 
-		return ['template' => 'register.html.php',
-				'title' => 'Regisztráció'
+		return [
+			'template' => 'register.html.php',
+			'title' => 'Regisztráció'
 		];
 
 	}
 
 	public function success(): array {
 
-		return ['template' => 'registersuccess.html.php',
-				'title' => 'Sikeres regisztráció!'
+		return [
+			'template' => 'registersuccess.html.php',
+			'title' => 'Sikeres regisztráció!'
 		];
 
 	}
@@ -76,12 +79,13 @@ class Register
 
 		}
 		else {
-			return ['template' => 'register.html.php',
-					'title' => 'Regisztráció',
-					'variables' => [
-						'author' => $author,
-						'errors' => $errors
-					]
+			return [
+				'template' => 'register.html.php',
+				'title' => 'Regisztráció',
+				'variables' => [
+					'author' => $author,
+					'errors' => $errors
+				]
 			];
 
 		}

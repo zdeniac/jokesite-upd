@@ -1,0 +1,2 @@
+<h2>Bejelentkezés szükséges az űrlap megnyitásához!</h2>
+<p>Kattintson <a href="/novice_to_ninja/login">ide</a> a bejelentkezéshez vagy <a href="/novice_to_ninja/author/register">regisztráljon</a>!</p>
