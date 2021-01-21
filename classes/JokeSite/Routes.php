@@ -41,8 +41,7 @@ class Routes implements \Ninja\Routes
 
 	public function getRoutes(): array {
 
-
-		$jokeController = new JokeController($this->jokesTable, $this->authorsTable);
+		$jokeController = new JokeController($this->jokesTable, $this->authorsTable, $this->authenticaton);
 		$authorController = new RegisterController($this->authorsTable);
 		$loginController = new LoginController($this->authenticaton);
 

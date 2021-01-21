@@ -3,20 +3,23 @@
 namespace JokeSite\Controllers;
 
 use \Ninja\DatabaseTable;
+use \Ninja\Authentication;
 
 
 class Joke
 {
 
 
-	public $jokesTable;
-	public $authorsTable;
+	private $jokesTable;
+	private $authorsTable;
+	private $authentication;
 
 	
-	public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable) {
+	public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, Authentication $authentication) {
 		
 		$this->jokesTable = $jokesTable;
 		$this->authorsTable = $authorsTable;
+		$this->authentication = $authentication;
 
 	}
 
@@ -83,8 +86,10 @@ class Joke
 
 	public function saveEdit() {
 
-		$joke = $_POST['joke'];	
-		$joke['author_id'] = 1;
+		$joke = $_POST['joke'];
+		$author = $this->authentication->getUser();
+
+		$joke['author_id'] = $author['id'];
 		$joke['date'] = new \DateTime();
 
 		$this->jokesTable->save($joke, $joke['id']);

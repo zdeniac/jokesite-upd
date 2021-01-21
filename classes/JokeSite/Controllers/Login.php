@@ -10,6 +10,7 @@ class Login
 
 	
 	private $authentication;
+	//localhost miatt kell
 	private $site = '/novice_to_ninja';
 
 
@@ -60,7 +61,9 @@ class Login
 
 	public function logout(): array {
 
-		unset($_SESSION);
+		session_unset();
+		// $_SESSION = [];
+		//session_destroy();
 
 		return [
 			'template' => 'login.html.php',
