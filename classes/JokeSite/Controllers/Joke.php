@@ -36,19 +36,25 @@ class Joke
     			'text' => $joke['text'], 
     			'date' => $joke['date'], 
     			'name' => $author['name'],
-    			'email' => $author['email']
+    			'email' => $author['email'],
+    			'author_id' => $author['id']
     		];
 
     	}
 
 		$countJokes = $this->jokesTable->total();
+		$user = $this->authentication->getUser();
 
 		$title = 'Viccek listája';
 
 		return [
 			'template' => 'jokes.html.php', 
 			'title' => $title, 
-			'variables' => ['countJokes' => $countJokes, 'jokes' => $jokes]
+			'variables' => [
+				'countJokes' => $countJokes,
+				'jokes' => $jokes,
+				'userId' => $user['id'] ?? null
+				]
 			];
 
 	}
@@ -62,6 +68,13 @@ class Joke
 
 	public function delete() {
 
+		$author = $this->authentication->getUser();
+		$joke = $this->jokesTable->findById($_POST['id']);
+
+		if ($author['id'] != $joke['author_id']) {
+			return;
+		}
+
 		$this->jokesTable->delete($_POST['id']);
 		
 		header('Location: /novice_to_ninja/joke/list');
@@ -69,6 +82,8 @@ class Joke
 
 //szerkesztés nézet
 	public function edit(): array {
+
+		$user = $this->authentication->getUser();
 
 		if (isset($_GET['id'])) {
 			$joke = $this->jokesTable->findById($_GET['id']);
@@ -79,15 +94,29 @@ class Joke
 		return [
 			'template' => 'editjoke.html.php',
 			'title' => $title, 
-			'variables' => ['joke' => $joke ?? null]
+			'variables' => [
+				'joke' => $joke ?? null,
+				'userId' => $user['id'] ?? null
+			]
 		];
 
 	}
 
 	public function saveEdit() {
 
-		$joke = $_POST['joke'];
 		$author = $this->authentication->getUser();
+
+		if ($_GET['id']) {
+			
+			$joke = $this->jokesTable->findById($_GET['id']);
+
+			if ($joke['author_id'] != $author['id']) {
+				return;
+			}
+
+		}
+
+		$joke = $_POST['joke'];
 
 		$joke['author_id'] = $author['id'];
 		$joke['date'] = new \DateTime();

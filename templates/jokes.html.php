@@ -1,4 +1,5 @@
-<p>Összesen <?=$countJokes?> vicc szerepel az adatbázisban</p>
+<p>Összesen <?=$countJokes?> vicc szerepel az adatbázisban:</p>
+<br>
 <?php foreach ($jokes as $joke): ?>
 <blockquote>
 	<?=htmlspecialchars($joke['text'], ENT_QUOTES, 'UTF-8')?>
@@ -12,6 +13,7 @@
 		?>
 		(<time><?=$date->format('Y.m.d. H:i')?></time>)
 	</p>
+<?php if ($userId == $joke['author_id']): ?>
 	<p>
 		<a href="/novice_to_ninja/joke/edit?id=<?=$joke['id']?>">Szerkesztés</a>
 		<form action="/novice_to_ninja/joke/delete" method="post">
@@ -19,5 +21,7 @@
 			<input type="submit" value="Törlés">
 		</form>
 	</p>
+<?php endif; ?>
 </blockquote>
+<br>
 <?php endforeach; ?>

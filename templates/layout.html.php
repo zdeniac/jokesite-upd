@@ -14,7 +14,7 @@
 			<li>
 				<a href="/novice_to_ninja/author/register">Regisztráció</a> / 
 			<?php if($loggedIn):?>
-				<a href="/novice_to_ninja/logout">Kijelentkezés</a>
+				<a href="/novice_to_ninja/logout">Kijelentkezés (<?=$_SESSION['username']?>)</a>
 			<?php else: ?>
 				<a href="/novice_to_ninja/login">Bejelentkezés</a>
 			<?php endif;?>
