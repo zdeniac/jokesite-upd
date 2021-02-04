@@ -56,6 +56,16 @@ class DatabaseTable {
 		return $result->fetchAll();
 	}
 
+	public function search(string $column, string $value): array {
+
+		$sql = 'SELECT * FROM `' . $this->table . '` WHERE `' . $column . '` LIKE :value';
+		$parameters = [':value' => '%' . $value . '%'];
+
+		$query = $this->query($sql, $parameters);
+
+		return $query->fetchAll();
+	}
+
 	public function delete(string $id) {
 
 		$sql = 'DELETE FROM `' . $this->table . '` WHERE `' . $this->primaryKey . '` = :' . $this->primaryKey;

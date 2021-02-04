@@ -58,6 +58,37 @@ class Joke
 			];
 
 	}
+//ezt lehet, hogy össze lehet vonni a list-tel, ha van get['s'] akkor ajax, am sima lekérés
+	public function ajaxSearch(): array {
+
+    	$jokes = [];
+
+    	$column = 'text';
+    	$value = $_GET['s'];
+
+    	foreach ($this->jokesTable->search($column, $value) as $joke) {
+
+    		$author = $this->authorsTable->findById($joke['author_id']);
+
+    		$jokes[] = [
+    			'id' => $joke['id'], 
+    			'text' => $joke['text'], 
+    			'date' => $joke['date'], 
+    			'name' => $author['name'],
+    			'email' => $author['email'],
+    			'author_id' => $author['id']
+    		];
+
+    	}
+
+		return [
+			'template' => 'jokesearch.html.php', 
+			'variables' => [
+				'jokes' => $jokes ?? null,
+				'userId' => $user['id'] ?? null
+				]
+			];
+	}
 	
 	public function home(): array {
 

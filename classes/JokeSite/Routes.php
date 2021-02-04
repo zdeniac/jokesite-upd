@@ -132,6 +132,14 @@ class Routes implements \Ninja\Routes
 				]
 			],
 
+			$this->site . '/joke/search' => [
+				'GET' => [
+					'controller' => $jokeController,
+					'action' => 'ajaxSearch'
+				],
+				'ajax' => true
+			],
+
 			$this->site . '/' => [
 				'GET' => [
 					'controller' => $jokeController,

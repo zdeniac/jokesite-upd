@@ -27,5 +27,24 @@
 	<footer>
 		
 	</footer>
+	<script type="text/javascript" src="/novice_to_ninja/javascript/joke_search.js"></script>
+	<script type="text/javascript">
+		
+		document.addEventListener("DOMContentLoaded", function(){
+
+			let jokes = document.querySelector('#jokes').innerHTML;
+
+			document.querySelector("#joke_search").addEventListener("keyup", function(){
+				if (this.value != "") {
+					jokeSearch(this.value);
+				}
+				else {
+					document.querySelector("#jokes").innerHTML = jokes;
+				}
+			});
+
+		});
+
+	</script>
 </body>
 </html>

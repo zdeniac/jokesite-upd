@@ -1,6 +1,3 @@
-<input type="text" id="joke_search" placeholder="Keresés">
-<p>Összesen <?=$countJokes?> vicc szerepel az adatbázisban:</p>
-<br>
 <div id="jokes">
 <?php if (!empty($jokes)): ?>
 	<?php foreach ($jokes as $joke): ?>
