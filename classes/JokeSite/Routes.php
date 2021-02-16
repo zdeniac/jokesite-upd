@@ -42,7 +42,7 @@ class Routes implements \Ninja\Routes
 	public function getRoutes(): array {
 
 		$jokeController = new JokeController($this->jokesTable, $this->authorsTable, $this->authenticaton);
-		$authorController = new RegisterController($this->authorsTable);
+		$registerController = new RegisterController($this->authorsTable);
 		$loginController = new LoginController($this->authenticaton);
 
 
@@ -50,18 +50,18 @@ class Routes implements \Ninja\Routes
 
 			$this->site . '/author/register' => [
 				'POST' => [
-					'controller' => $authorController,
+					'controller' => $registerController,
 					'action' => 'registerUser'
 				],
 				'GET' => [
-					'controller' => $authorController,
+					'controller' => $registerController,
 					'action' => 'registrationForm'
 				]
 			],
 
 			$this->site . '/author/success' => [
 				'GET' => [
-					'controller' => $authorController,
+					'controller' => $registerController,
 					'action' => 'success'
 				]
 			],

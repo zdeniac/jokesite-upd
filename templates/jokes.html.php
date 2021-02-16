@@ -1,4 +1,4 @@
-<input type="text" id="joke_search" placeholder="Keresés">
+<input type="text" id="joke_search" placeholder="Keresés a vicc szövegében">
 <p>Összesen <?=$countJokes?> vicc szerepel az adatbázisban:</p>
 <br>
 <div id="jokes">

@@ -58,8 +58,7 @@ class EntryPoint
 
 //ajax-kérés esetén nem kell még egyszer betölteni a layout-ot
 				if (isset($routes[$this->route]['ajax'])) {
-					$output = $this->loadTemplate($page['template'], $page['variables']);
-					echo $output;
+					echo $this->loadTemplate($page['template'], $page['variables']);
 					return;
 				}
 
